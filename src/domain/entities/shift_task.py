@@ -9,15 +9,15 @@ ShiftTaskId = NewType("ShiftTaskId", int)
 
 @dataclass
 class ShiftTasksEntity:
-    closure_status: bool
-    shift_task_description: str
-    line: str
-    shift: str
-    crew: str
-    batch_number: int
-    batch_date: datetime
-    nomenclature: str
-    ecn_code: str
-    rc_identifier: str
-    shift_start_time: datetime
-    shift_end_time: datetime
+    closure_status: bool | None
+    shift_task_description: str | None
+    line: str | None
+    shift: str | None
+    crew: str | None
+    batch_number: int | None
+    batch_date: datetime | None
+    nomenclature: str | None
+    ecn_code: str | None
+    rc_identifier: str | None
+    shift_start_time: datetime | None
+    shift_end_time: datetime | None
