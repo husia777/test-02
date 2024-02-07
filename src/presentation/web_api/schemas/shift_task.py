@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 from pydantic import BaseModel, Field
 
 
@@ -31,3 +32,7 @@ class ShiftTasksUpdateSchema(BaseModel):
     rc_identifier: str | None = None
     shift_start_time: datetime | None = None
     shift_end_time: datetime | None = None
+
+
+
+
