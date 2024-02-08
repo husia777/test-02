@@ -1,7 +1,7 @@
 
 from datetime import datetime
 from enum import Enum
-from src.domain.entities.shift_task import AvailableFilters, ShiftTasksEntity
+from src.domain.entities.shift_task import AvailableFilters, ProductEntity, ShiftTasksEntity
 
 
 class TaskService:

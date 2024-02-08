@@ -4,10 +4,10 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from enum import Enum
 from sqlalchemy import select, delete, update, insert, and_, or_
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import joinedload
 from src.adapters.db.repositories.converters.task import task_entity_to_model
 from src.adapters.db.models.shift_task import ShiftTask
-from src.domain.entities.shift_task import AvailableFilters, ShiftTasksEntity, ShiftTaskId
+from src.domain.entities.shift_task import AvailableFilters, ProductEntity, ShiftTasksEntity, ShiftTaskId, ShiftTasksWithProductsEntity
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -48,7 +48,7 @@ class TaskRepository(TaskRepositoryInterface):
 
     async def get_task_by_id(self, task_id: int) -> ShiftTasksEntity:
         task = await self.session.execute(select(ShiftTask).where(ShiftTask.id == task_id))
-        return task.scalars().first()
+        return task.unique().scalars().first()
 
     async def update_task_by_id(self, task_id: int, update_data: ShiftTasksEntity):
         task_in_db = await self.session.execute(select(ShiftTask).where(ShiftTask.id == task_id))
@@ -63,10 +63,6 @@ class TaskRepository(TaskRepositoryInterface):
         result = await self.session.execute(stmt)
         await self.session.commit()
         return result.scalar_one()
-
-    async def get_all_tasks(self) -> list[ShiftTasksEntity]:
-        tasks = await self.session.execute(select(ShiftTask))
-        return tasks.scalars().all()
 
     async def get_tasks_by_filter(self, skip: int, limit: int, sort_field: AvailableFilters, closure_status, shift_task_description,
                                   line, shift, crew, batch_number, batch_date, nomenclature, ecn_code, rc_identifier,
@@ -87,10 +83,23 @@ class TaskRepository(TaskRepositoryInterface):
             'shift_end_time': shift_end_time
         }
 
-        # Создание динамического условия для фильтрации
         filter_conditions = [getattr(
             ShiftTask, field) == value for field, value in filters.items() if value is not None]
 
-        # Получение заданий с учетом фильтров и пагинации
         filtered_tasks = await self.session.execute(select(ShiftTask).where(and_(*filter_conditions)).offset(skip).limit(limit).order_by(getattr(ShiftTask, sort_field.name)))
         return filtered_tasks.scalars().all()
+
+    async def add_product_to_shift_task(self, product: ProductEntity):
+        self.session.add(product)
+        await self.session.commit()
+
+    async def get_all_tasks(self):
+        tasks = await self.session.execute(select(ShiftTask).options(joinedload(ShiftTask.products)))
+        query = tasks.unique().scalars().all()
+        print('------')
+        print(query)
+        print('------')
+        return query
+# Если продукция передана с несуществующей партией
+# (нет сменного задания с указаным номером партии и датой партии),
+# то данную продукцию можно игнорировать.

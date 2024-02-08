@@ -8,6 +8,7 @@ from logging.config import fileConfig
 from src.adapters.db.connection import Base
 from src.adapters.db.config import settings
 from src.adapters.db.models.shift_task import ShiftTask
+from src.adapters.db.models.product import Product
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config

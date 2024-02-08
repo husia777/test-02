@@ -3,10 +3,10 @@ from src.domain.entities.shift_task import AvailableFilters
 from fastapi import APIRouter, Depends, HTTPException
 from src.presentation.web_api.dependencies.depends_stub import Stub
 from src.presentation.web_api.providers.abstract.task import task_service_provider
-from src.presentation.web_api.schemas.shift_task import ShiftTasksCreateSchema, ShiftTasksUpdateSchema
-from src.interactors.task.task_service import TaskService
+from src.presentation.web_api.schemas.shift_task import ShiftTasksCreateSchema, ShiftTasksListSchema, ShiftTasksUpdateSchema, ProductSchema
+from src.interactors.task_service import TaskService
 task_router = APIRouter(
-    tags=['users'],
+    tags=['task'],
 
 )
 
@@ -35,7 +35,7 @@ async def update_task(task_id: int, payload: ShiftTasksUpdateSchema, task_servic
     return await task_service.update_task_by_id(task_id, update_data)
 
 
-@task_router.get('/tasks/')
+@task_router.get('/tasks/filter')
 async def get_tasks_by_filter(sort_field: AvailableFilters,
                               skip: int = 0, limit: int = 100,
                               task_service: TaskService = Depends(

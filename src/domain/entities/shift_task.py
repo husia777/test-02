@@ -9,6 +9,13 @@ ShiftTaskId = NewType("ShiftTaskId", int)
 
 
 @dataclass
+class ProductEntity:
+    unique_product_code: str
+    batch_number: int
+    batch_date: datetime
+
+
+@dataclass
 class ShiftTasksEntity:
     closure_status: bool | None
     shift_task_description: str | None
@@ -24,6 +31,24 @@ class ShiftTasksEntity:
     shift_end_time: datetime | None
 
 
+@dataclass
+class ShiftTasksWithProductsEntity:
+    closure_status: bool | None
+    shift_task_description: str | None
+    line: str | None
+    shift: str | None
+    crew: str | None
+    batch_number: int | None
+    batch_date: datetime | None
+    nomenclature: str | None
+    ecn_code: str | None
+    rc_identifier: str | None
+    shift_start_time: datetime | None
+    shift_end_time: datetime | None
+    products: list[ProductEntity] | None = None
+
+
+@dataclass
 class AvailableFilters(str, Enum):
     closure_status = 'Closure status'
     shift_task_description = 'Shift task description'
