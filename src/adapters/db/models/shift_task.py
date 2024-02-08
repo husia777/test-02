@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-from sqlalchemy import  DateTime
+from sqlalchemy import DateTime
 from src.adapters.db.models.product import Product
 
 from src.adapters.db.connection import Base
@@ -16,7 +16,8 @@ class ShiftTask(Base):
     shift: Mapped[str] = mapped_column()
     crew: Mapped[str] = mapped_column()
     batch_number: Mapped[int] = mapped_column(unique=True)
-    batch_date: Mapped[datetime] = mapped_column(DateTime(timezone=True), unique=True)
+    batch_date: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), unique=True)
     nomenclature: Mapped[str] = mapped_column()
     ecn_code: Mapped[str] = mapped_column()
     rc_identifier: Mapped[str] = mapped_column()
@@ -26,4 +27,5 @@ class ShiftTask(Base):
     shift_end_time: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
     )
-    closed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)
+    closed_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=True)
