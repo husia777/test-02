@@ -46,20 +46,23 @@ jobs:
       - name: Run Tests
         run: pytest
 
-  build-and-push-docker:
-    name: Build and Push Docker Image
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-        name: Check out code
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - uses: mr-smithers-excellent/docker-build-push@v6
-        name: Build & push Docker image
+      - name: Build
+        id: build
+        uses: cloudposse/github-action-docker-build-push@main
         with:
-          image: repo/image
-          tags: v1, latest
-          registry: registry-url.io
-          dockerfile: Dockerfile.ci
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: registry.hub.docker.com
+          organization: "${{ github.event.repository.owner.login }}"
+          repository: "${{ github.event.repository.name }}"
+          login: "${{ secrets.DOCKERHUB_USERNAME }}"
+          password: "${{ secrets.DOCKERHUB_PASSWORD }}"
+          platforms: linux/amd64,linux/arm64
+
+    outputs:
+      image: ${{ steps.build.outputs.image }}
+      tag: ${{ steps.build.outputs.tag }}
