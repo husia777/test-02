@@ -1,5 +1,4 @@
 from datetime import datetime
-from enum import Enum
 from pydantic import BaseModel, Field
 
 
@@ -11,8 +10,7 @@ class ProductSchema(BaseModel):
 
 class ShiftTasksCreateSchema(BaseModel):
     closure_status: bool = Field(..., alias="СтатусЗакрытия")
-    shift_task_description: str = Field(...,
-                                        alias="ПредставлениеЗаданияНаСмену")
+    shift_task_description: str = Field(..., alias="ПредставлениеЗаданияНаСмену")
     line: str = Field(..., alias="Линия")
     shift: str = Field(..., alias="Смена")
     crew: str = Field(..., alias="Бригада")
@@ -27,8 +25,7 @@ class ShiftTasksCreateSchema(BaseModel):
 
 class ShiftTasksListSchema(BaseModel):
     closure_status: bool = Field(..., alias="СтатусЗакрытия")
-    shift_task_description: str = Field(...,
-                                        alias="ПредставлениеЗаданияНаСмену")
+    shift_task_description: str = Field(..., alias="ПредставлениеЗаданияНаСмену")
     line: str = Field(..., alias="Линия")
     shift: str = Field(..., alias="Смена")
     crew: str = Field(..., alias="Бригада")
@@ -40,6 +37,7 @@ class ShiftTasksListSchema(BaseModel):
     shift_start_time: datetime = Field(..., alias="ДатаВремяНачалаСмены")
     shift_end_time: datetime = Field(..., alias="ДатаВремяОкончанияСмены")
     products: list[ProductSchema] = Field(..., alias="Продукты")
+
 
 class ShiftTasksUpdateSchema(BaseModel):
     closure_status: bool | None = None

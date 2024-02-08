@@ -38,5 +38,4 @@ def get_product_service(product_repository=Depends(get_product_repository)):
 
 
 app.dependency_overrides[task_service_provider] = get_task_service
-app.dependency_overrides[product_service_provider
-                         ] = get_product_service
+app.dependency_overrides[product_service_provider] = get_product_service

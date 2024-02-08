@@ -5,12 +5,12 @@ from src.adapters.db.config import settings
 
 
 engine = create_async_engine(
-    settings.sqlalchemy_database_url, echo=True, future=True,
+    settings.sqlalchemy_database_url,
+    echo=True,
+    future=True,
     poolclass=NullPool,
 )
-async_session = sessionmaker(
-    engine, expire_on_commit=False, class_=AsyncSession
-)
+async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 
 class Base(DeclarativeBase):

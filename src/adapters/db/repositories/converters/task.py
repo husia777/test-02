@@ -1,9 +1,8 @@
 from src.adapters.db.models.shift_task import ShiftTask
-from src.domain.entities.shift_task import ProductEntity, ShiftTasksEntity
+from src.domain.entities.shift_task import ShiftTasksEntity
 
 
 async def task_entity_to_model(task: ShiftTasksEntity) -> ShiftTask:
-
     db_task = ShiftTask(
         closure_status=task.closure_status,
         shift_task_description=task.shift_task_description,
