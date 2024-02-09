@@ -2,6 +2,10 @@ from src.adapters.db.connection import Base
 from sqlalchemy import DateTime, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 from datetime import datetime
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.adapters.db.models.shift_task import ShiftTask
 
 
 class Product(Base):
@@ -17,4 +21,4 @@ class Product(Base):
     aggregated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=True
     )
-    owner: Mapped['ShiftTask'] = relationship(back_populates="products")
+    owner: Mapped[ShiftTask] = relationship(back_populates="products")

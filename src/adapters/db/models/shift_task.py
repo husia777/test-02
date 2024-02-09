@@ -1,15 +1,18 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 from sqlalchemy import DateTime
-from src.adapters.db.models.product import Product
 
 from src.adapters.db.connection import Base
+
+if TYPE_CHECKING:
+    from src.adapters.db.models.product import Product
 
 
 class ShiftTask(Base):
     __tablename__ = "tasks"
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    products: Mapped[list["Product"]] = relationship(back_populates="owner")
+    products: Mapped[list[Product]] = relationship(back_populates="owner")
     closure_status: Mapped[bool] = mapped_column()
     shift_task_description: Mapped[str] = mapped_column()
     line: Mapped[str] = mapped_column()
