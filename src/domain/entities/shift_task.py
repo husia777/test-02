@@ -46,17 +46,16 @@ class ShiftTasksWithProductsEntity:
     products: list[ProductEntity] | None = None
 
 
-@dataclass
 class AvailableFilters(str, Enum):
-    closure_status = "Closure status"
-    shift_task_description = "Shift task description"
-    line = "Line"
-    shift = "Shift"
-    crew = "Crew"
-    batch_number = "Batch number"
-    batch_date = "Batch date"
-    nomenclature = "Nomenclature"
-    ecn_code = "ECN code"
-    rc_identifier = "RC identifier"
-    shift_start_time = "Shift start time"
-    shift_end_time = "Shift end time"
+    closure_status = 'Closure status'
+    shift_task_description = 'Shift task description'
+    line = 'Line'
+    shift = 'Shift'
+    crew = 'Crew'
+    batch_number = 'Batch number'
+    batch_date = 'Batch date'
+    nomenclature = 'Nomenclature'
+    ecn_code = 'ECN code'
+    rc_identifier = 'RC identifier'
+    shift_start_time = 'Shift start time'
+    shift_end_time = 'Shift end time'
