@@ -26,6 +26,7 @@ class ProductRepository(ProductRepositoryInterface):
             product_in_db = await product_entity_to_model(product)
             self.session.add(product_in_db)
         await self.session.commit()
+        return {"message": "Products added"}
 
     async def is_product_exists(self, unique_product_code: int):
         product = await self.session.execute(
